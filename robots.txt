@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    
+    
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="/Content/bootstrap.css" rel="stylesheet"/>
+<link href="/Content/bootstrap-datepicker3.standalone.css" rel="stylesheet"/>
+<link href="/Content/site.css" rel="stylesheet"/>
+<link href="/Content/switchery.min.css" rel="stylesheet"/>
+<link href="/Content/netevents.css" rel="stylesheet"/>
+
+    <link href="/Content/frontpage.css" rel="stylesheet"/>
+
+    
+        <script src="/Scripts/modernizr.js"></script>
+
+        
+
+        <script src="/Scripts/jquery-1.10.2.js"></script>
+<script src="/Scripts/knockout.min.js"></script>
+<script src="/Scripts/knockout.mapping-latest.js"></script>
+<script src="/Scripts/bootstrap.js"></script>
+<script src="/Scripts/moment-latest-min.js"></script>
+<script src="/Scripts/bootstrap-datepicker.js"></script>
+<script src="/Scripts/respond.js"></script>
+<script src="/Scripts/lodash.js"></script>
+<script src="/Scripts/sha1.js"></script>
+<script src="/Scripts/switchery.min.js"></script>
+<script src="/Scripts/setimmediate.js"></script>
+<script src="/Scripts/rx-latest-min.js"></script>
+
+        <script src="/Scripts/TypeScripts/Common/DateFunctions.js"></script>
+<script src="/Scripts/TypeScripts/Common/Go.js"></script>
+<script src="/Scripts/TypeScripts/Common/NetEvents.js"></script>
+<script src="/Scripts/TypeScripts/Common/Components/Dialog/Dialog.js"></script>
+<script src="/Scripts/TypeScripts/Common/Components/ProcessOrderDialog/ProcessOrderDialog.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/BootstrapDatePicker.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/ClickDelegate.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/confirmButton.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/disableChildInputs.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/FadeVisible.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/ModalDialog.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/numeric.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/numericPrecisionValue.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/slideVisible.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/Switchery.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomBindings/Tooltip.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomExtenders/FormatDateExtender.js"></script>
+<script src="/Scripts/TypeScripts/Common/CustomExtenders/NumericExtender.js"></script>
+
+
+        
+    <script src="/Scripts/Typescripts/User/EventRegisterPage.js"></script>
+<script src="/Scripts/Typescripts/User/OrderFunctions.js"></script>
+<script src="/Scripts/Typescripts/User/OrderTicketClassViewModel.js"></script>
+<script src="/Scripts/Typescripts/User/OrderTicketViewModel.js"></script>
+<script src="/Scripts/Typescripts/User/OrderViewModel.js"></script>
+<script src="/Scripts/Typescripts/User/UserCheckoutVM.js"></script>
+<script src="/Scripts/Typescripts/User/ViewModels/AnswerBaseVM.js"></script>
+<script src="/Scripts/Typescripts/User/ViewModels/AnswerDateVM.js"></script>
+<script src="/Scripts/Typescripts/User/ViewModels/AnswerEmailVM.js"></script>
+<script src="/Scripts/Typescripts/User/ViewModels/AnswerFlagVM.js"></script>
+<script src="/Scripts/Typescripts/User/ViewModels/AnswerSelectListVM.js"></script>
+<script src="/Scripts/Typescripts/User/ViewModels/AnswerTextVM.js"></script>
+<script src="/Scripts/Typescripts/User/ViewModels/IAnswerSaveValidation.js"></script>
+
+    <script src="/Scripts/Typescripts/Definitions/EventModel.js"></script>
+<script src="/Scripts/Typescripts/Definitions/EventSaveModel.js"></script>
+<script src="/Scripts/Typescripts/Definitions/genVM%20(1).js"></script>
+<script src="/Scripts/Typescripts/Definitions/genVM%20(2).js"></script>
+<script src="/Scripts/Typescripts/Definitions/genVM.js"></script>
+<script src="/Scripts/Typescripts/Definitions/OrderModel.js"></script>
+<script src="/Scripts/Typescripts/Definitions/SearchOrderManagementModel.js"></script>
+<script src="/Scripts/Typescripts/Definitions/SearchResultOrder.js"></script>
+<script src="/Scripts/Typescripts/Definitions/SearchTicketCheckInModel.js"></script>
+
+    
+ 
+
+
+    
+    <script id="About" type="text/html">
+            <div class="personalDetails">
+    <h2>This is the about template</h2>
+    <p data-bind="text:name"></p>
+</div>
+
+            </script>
+
+<script id="TestTemplate" type="text/html">
+            <div class="personalDetails">
+    <h2>This is the test template</h2>
+    <p data-bind="text:name"></p>
+    <p data-bind="text:name"></p>
+    <p data-bind="text:name"></p>
+    <p data-bind="text:name"></p>
+    <p data-bind="text:name"></p>
+    
+
+
+
+</div>
+
+            </script>
+
+
+
+
+
+    <script type="text/javascript">
+        NetEvents.InitialiseNE();
+    </script>
+
+    <meta name="description" content="Ignite Event Management System"/>
+</head>
+<body>
+    
+    <div id="savinggrowl" style="display:none;"></div>
+
+
+    <div class="container body-content">
+        
+    
+
+        
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+</head>
+<body>
+    <hgroup>
+        <h1>Error.</h1>
+        <h2>We're sorry, but that event does not exist. Please check what you entered.</h2>
+    </hgroup>
+</body>
+</html>
+
+
+
+
+
+
+
+
+        <hr />
+        <footer style="margin-top:200px;">
+            <p class="text-center">&copy; 2016</p>
+            <p class="text-center">
+</p>
+        </footer>
+    </div>
+
+    
+    
+
+    
+</body>
+</html>

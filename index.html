@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    
+    
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ignite Youth Event Registration</title>
+    <link href="./Content/bootstrap.css" rel="stylesheet"/>
+<link href="./Content/bootstrap-datepicker3.standalone.css" rel="stylesheet"/>
+<link href="./Content/site.css" rel="stylesheet"/>
+<link href="./Content/switchery.min.css" rel="stylesheet"/>
+<link href="./Content/netevents.css" rel="stylesheet"/>
+
+    <link href="./Content/frontpage.css" rel="stylesheet"/>
+
+    
+        <script src="./Scripts/modernizr.js"></script>
+
+        
+
+        <script src="./Scripts/jquery-1.10.2.js"></script>
+<script src="./Scripts/knockout.min.js"></script>
+<script src="./Scripts/knockout.mapping-latest.js"></script>
+<script src="./Scripts/bootstrap.js"></script>
+<script src="./Scripts/moment-latest-min.js"></script>
+<script src="./Scripts/bootstrap-datepicker.js"></script>
+<script src="./Scripts/respond.js"></script>
+<script src="./Scripts/lodash.js"></script>
+<script src="./Scripts/sha1.js"></script>
+<script src="./Scripts/switchery.min.js"></script>
+<script src="./Scripts/setimmediate.js"></script>
+<script src="./Scripts/rx-latest-min.js"></script>
+
+        <script src="./Scripts/TypeScripts/Common/DateFunctions.js"></script>
+<script src="./Scripts/TypeScripts/Common/Go.js"></script>
+<script src="./Scripts/TypeScripts/Common/NetEvents.js"></script>
+<script src="./Scripts/TypeScripts/Common/Components/Dialog/Dialog.js"></script>
+<script src="./Scripts/TypeScripts/Common/Components/ProcessOrderDialog/ProcessOrderDialog.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/BootstrapDatePicker.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/ClickDelegate.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/confirmButton.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/disableChildInputs.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/FadeVisible.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/ModalDialog.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/numeric.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/numericPrecisionValue.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/slideVisible.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/Switchery.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomBindings/Tooltip.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomExtenders/FormatDateExtender.js"></script>
+<script src="./Scripts/TypeScripts/Common/CustomExtenders/NumericExtender.js"></script>
+
+
+        
+    <script src="./Scripts/Typescripts/User/EventRegisterPage.js"></script>
+<script src="./Scripts/Typescripts/User/OrderFunctions.js"></script>
+<script src="./Scripts/Typescripts/User/OrderTicketClassViewModel.js"></script>
+<script src="./Scripts/Typescripts/User/OrderTicketViewModel.js"></script>
+<script src="./Scripts/Typescripts/User/OrderViewModel.js"></script>
+<script src="./Scripts/Typescripts/User/UserCheckoutVM.js"></script>
+<script src="./Scripts/Typescripts/User/ViewModels/AnswerBaseVM.js"></script>
+<script src="./Scripts/Typescripts/User/ViewModels/AnswerDateVM.js"></script>
+<script src="./Scripts/Typescripts/User/ViewModels/AnswerEmailVM.js"></script>
+<script src="./Scripts/Typescripts/User/ViewModels/AnswerFlagVM.js"></script>
+<script src="./Scripts/Typescripts/User/ViewModels/AnswerSelectListVM.js"></script>
+<script src="./Scripts/Typescripts/User/ViewModels/AnswerTextVM.js"></script>
+<script src="./Scripts/Typescripts/User/ViewModels/IAnswerSaveValidation.js"></script>
+
+    <script src="./Scripts/Typescripts/Definitions/EventModel.js"></script>
+<script src="./Scripts/Typescripts/Definitions/EventSaveModel.js"></script>
+<script src="./Scripts/Typescripts/Definitions/genVM%20(1).js"></script>
+<script src="./Scripts/Typescripts/Definitions/genVM%20(2).js"></script>
+<script src="./Scripts/Typescripts/Definitions/genVM.js"></script>
+<script src="./Scripts/Typescripts/Definitions/OrderModel.js"></script>
+<script src="./Scripts/Typescripts/Definitions/SearchOrderManagementModel.js"></script>
+<script src="./Scripts/Typescripts/Definitions/SearchResultOrder.js"></script>
+<script src="./Scripts/Typescripts/Definitions/SearchTicketCheckInModel.js"></script>
+
+    
+    <script id="EventRegister" type="text/html">
+            <div class="order">
+    <h1>REGISTRATION</h1>
+    <div class="jumbotron box-vertical">
+
+        <div class="box-stretch">
+            <img class="masthead" data-bind="attr:{src:eventModelJS().mastheadImage}"/>
+        </div>
+
+        <div class="box-stretch masthead-text">
+            <h1 data-bind="text:eventModelJS().eventName"></h1>
+            <h2>When: <span data-bind="text:eventDateRange"></span></h2>
+            <h2>Location: <span data-bind="text:eventModelJS().location"></span></h2>
+            <h2 data-bind="visible:showContact()">Contact: <span data-bind="text:eventModelJS().contactName"></span> <span data-bind="text:eventModelJS().contactNumber"></span></h2>
+            <p style="white-space: pre-wrap;" data-bind="text:eventModelJS().blurb"></p>
+        </div>
+    </div>
+
+    <!-- ko with:order-->
+    <!-- ko foreach:regularTicketTypes-->
+    <!-- ko template:{name:'OrderTicketClass',data:$data} --><!-- /ko-->
+    <!-- /ko-->
+    <!-- ko if: showEnterCouponCodeBox-->
+    <!-- ko template:{name:'TextField', data:{label:'Enter Coupon Code', valueAccessor:newCouponCode}} --><!-- /ko-->
+    <!-- /ko-->
+
+
+    <div class="alert alert-danger alert-block" data-bind="visible:eventSoldOut">
+        <h3 class="text-center">Currently No Tickets Available For Purchase</h3>
+        <p class="text-center" data-bind="text:eventModelJS().soldOutMessage"></p>
+    </div>
+
+    <button class="btn btn-large btn-success" style="margin-top: 20px" data-bind="visible: !eventSoldOut(), click:placeOrder">Place Order</button>
+    <!-- ko template:{name:'ValidationErrors', data:validationErrors}--><!-- /ko-->
+
+
+    <div data-bind="modalDialog:dialog"></div>
+
+    <!-- ko template:{name:'DebugJSON'} --><!-- /ko-->
+    <!-- /ko-->
+    <hr />
+    <a class="btn btn-large btn-default dark center-block" style="width:230px;"  href="http://www.igniteyouth.com" role="button">Return to Ignite Youth</a>
+</div>
+            </script>
+
+<script id="OrderTicket" type="text/html">
+            <div class="order-ticket">
+    <h3 data-bind="text:name"></h3>
+
+    <!-- NOTE - there's an issue in that the fields are different widths. I haven't fixed yet, but this is a clue http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width-->
+    <!-- ko foreach:answers-->
+    <div class="row">
+        
+        <div class="text-left col-xs-1">
+            <!-- ko template:{name:'ValidationErrors', data:validationErrors}--><!-- /ko-->
+        </div>
+        <div class="col-xs-11" data-bind="css:{ 'has-error': hasErrors(), 'has-success': !hasErrors() && validationRun() }">
+            <!-- ko template:{name:OrderFunctions.AnswerTypeDetails(questionType()).Template} --><!-- /ko-->
+        </div>
+    </div>
+    <!-- /ko -->
+    
+    <div class="discount-code" data-bind="visible:showDiscountCodeBox">
+        <!-- ko template:{name:'TextField', data:{label:'Discount Code', valueAccessor:discountCode}} --><!-- /ko-->
+        <!-- ko if:discountValid-->
+            <!-- ko template:{name:'CurrencyLabel', data:{label:'Discounted Price', valueAccessor:discountedPrice}} --><!-- /ko-->
+        <!-- /ko-->
+    </div>
+</div>
+            </script>
+
+<script id="OrderTicketClass" type="text/html">
+            <div data-bind="attr:{'class': 'order-ticket-class ' + 'palette' + palette()}">
+    <div class="xrow ticket-header">
+        <div>
+            <div class="xrow box-horizontal">
+                <div class="box-stretch flexthree row-cell">
+                    <div class="big" data-bind="text:ticketModel.name"></div>
+                    <div data-bind="text:ticketModel.ticketDescription"></div>
+                </div>
+                
+                <div class="box-stretch row-cell">Number of Tickets</div>
+                <div class="box-stretch row-cell">
+                    <select class="form-control ticket-count-picker" data-bind="options: ticketCountOptions, value: ticketCount"></select>
+                </div>
+                <div class="box-stretch row-cell big colour-block" data-bind="text:NetEvents.formatCurrency(ticketModel.cost)"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ko foreach:ticketsToPurchase-->
+    <!-- ko template:{name:'OrderTicket', data:$data}--><!-- /ko-->
+    <!-- /ko-->
+</div>
+            </script>
+
+<script id="AnswerDate" type="text/html">
+            <div class="question question-date">
+    <!-- ko template:{name:'DatePickerField', data:{label:questionText(), valueAccessor:answerText, mandatory:mandatory}} --><!-- /ko-->
+</div>
+
+            </script>
+
+<script id="AnswerEmail" type="text/html">
+            <div class="answer answer-email">
+    <!-- ko template:{name:'TextField', data:{label:questionText(), valueAccessor:answerText, mandatory:mandatory}} --><!-- /ko-->
+</div>
+            </script>
+
+<script id="AnswerFlag" type="text/html">
+            <div class="answer answer-flag">
+    <!-- ko template:{name:'CheckField', data:{label:questionText(), valueAccessor:answerText, mandatory:mandatory}} --><!-- /ko-->
+</div>
+
+            </script>
+
+<script id="AnswerSelectList" type="text/html">
+            <div class="answer answer-select-list">
+    <!-- ko template:{name:'OptionField', data:{label:questionText(), options: options, valueAccessor:answerText, mandatory:mandatory}} --><!-- /ko-->
+    
+</div>
+
+            </script>
+
+<script id="AnswerText" type="text/html">
+            <div class="answer answer-text">
+    <!-- ko template:{name:'TextField', data:{label:questionText(), valueAccessor:answerText, mandatory:mandatory}} --><!-- /ko-->
+</div>
+
+            </script>
+
+
+
+<script id="ButtonField" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label>
+        <span data-bind="text:label"></span>
+    </label>
+
+    <button style="display: block" class="btn btn-xs btn-info" data-bind="click:action.bind(parent)">
+        <!-- ko text:buttonText--><!--/ko-->
+    </button>
+</div>
+            </script>
+
+<script id="CheckField" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label>
+        <span data-bind="text:label"></span>
+        <!-- ko template: {name:'MandatoryStar'}--><!--/ko-->
+        <input type="checkbox" data-bind="switchery: valueAccessor" />
+    </label>
+
+</div>
+
+            </script>
+
+<script id="CurrencyField" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label data-bind="text:label" style="display:block;"></label>
+    <div class="input-group input-group-sm">
+        <span class="input-group-addon">$</span>
+        <input class="form-control" type="number" data-bind="numericPrecisionValue: valueAccessor, valueUpdate: 'afterkeydown', precision:2" />
+    </div>
+</div>
+            </script>
+
+<script id="CurrencyLabel" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label style="display:block" data-bind="text:label"></label>
+    <span data-bind="text: NetEvents.formatCurrency(valueAccessor())"></span>
+</div>
+            </script>
+
+<script id="DangerButtonField" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label>
+        <span data-bind="text:label"></span>
+    </label>
+
+    <button style="display: block" class="btn btn-xs btn-danger" data-bind="click:parent == null ? action : action.bind(parent)">
+        <!-- ko text:buttonText--><!--/ko-->
+    </button>
+    
+</div>
+            </script>
+
+<script id="DatePickerField" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label data-bind="text:label"></label>
+    <div>
+        <button class="btn btn-xs btn-default" data-bind="boostrapDatePicker: valueAccessor"></button>
+    </div>
+</div>
+
+
+            </script>
+
+<script id="DateReadOnlyField" type="text/html">
+            <!-- ko template:{name:'LabelField', data:{label:$data.label, valueAccessor: longDate(new Date(ko.unwrap(valueAccessor)))}} --><!-- /ko-->
+
+            </script>
+
+<script id="DebugJSON" type="text/html">
+            <!-- ko if:false-->    
+<code>
+        <!-- ko text:JSON.stringify(ko.toJS($data),null,2)--><!-- /ko -->
+</code>
+<!-- /ko-->
+            </script>
+
+<script id="ErrorList" type="text/html">
+            <ul data-bind="foreach: $data">
+    <li>
+        <span data-bind="text: $index"> </span>:
+        <span data-bind="text: $data"> </span>
+    </li>
+</ul>
+            </script>
+
+<script id="FormValid" type="text/html">
+            <!-- ko if: !validForSave() -->
+<div>
+    <span class='label label-danger'>Form not complete</span>
+
+    <div class="event-save-errors">
+        <ul>
+            <!--ko foreach:$data.saveErrors -->
+            <li><span data-bind="text:$data"></span></li>
+            <!-- /ko-->
+        </ul>
+    </div>
+</div>
+<!-- /ko -->
+
+            </script>
+
+<script id="LabelField" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label data-bind="text:label"></label>
+    <span data-bind="text: valueAccessor"></span>
+</div>
+            </script>
+
+<script id="LabelFieldVertical" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label>
+        <span data-bind="text:label"></span>
+        <!-- ko template: {name:'MandatoryStar'}--><!--/ko-->
+    </label>
+    
+    <label class="form-control clear" data-bind="text:valueAccessor"></label>
+</div>
+            </script>
+
+<script id="MandatoryStar" type="text/html">
+            <!-- ko if: function(){return $data.mandatory && ko.unwrap($data.mandatory);}()-->
+<span class="mandatory-star">*</span>
+<!-- /ko-->
+            </script>
+
+<script id="NumericField" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label data-bind="text:label" style="display:block;"></label>
+    <input class="form-control" type="number" data-bind="numericPrecisionValue: valueAccessor, valueUpdate: 'afterkeydown', precision:$data.precision" />
+</div>
+            </script>
+
+<script id="OptionField" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label>
+        <span data-bind="text:label"></span>
+        <!-- ko template: {name:'MandatoryStar'}--><!--/ko-->
+    </label>
+
+    <select class="form-control" data-bind="options: options, value: valueAccessor"></select>
+</div>
+            </script>
+
+<script id="Saving" type="text/html">
+            <!-- ko if: saveStatus()=='saving' -->
+<span class='label label-warning'>Saving</span>
+<!-- /ko -->
+<!-- ko if: saveStatus()=='saved' -->
+<span class='label label-success'>Saved</span>
+<!-- /ko -->
+<!-- ko if: saveStatus()=='unsavedChanges' -->
+<span class='label label-danger'>Unsaved Changes</span>
+<!-- /ko -->
+            </script>
+
+<script id="TextAreaField" type="text/html">
+            
+<div class="controls form-group form-group-sm">
+    <div class="input-group input-group-sm">
+        <label data-bind="text:label"></label>
+        <textarea class="form-control" type="text" data-bind="value: valueAccessor, valueUpdate: 'afterkeydown', attr:{rows:rows, cols:cols}"></textarea>
+    </div>
+</div>
+            </script>
+
+<script id="TextField" type="text/html">
+            <div class="controls input-group input-group-sm">
+    <label>
+        <span data-bind="text:label"></span>
+        <!-- ko template: {name:'MandatoryStar'}--><!--/ko-->
+    </label>
+
+    <input class="form-control clear" type="text" data-bind="value: valueAccessor, valueUpdate: 'afterkeydown'" />
+</div>
+            </script>
+
+<script id="ValidationErrors" type="text/html">
+            <span class="label label-danger label-as-badge" data-bind="tooltip:$data, text:$data.length == 0 ? '' : $data.length"></span>
+<!-- ko template:{name:'DebugJSON'} --><!-- /ko-->
+
+            </script>
+
+
+
+<script id="Dialog" type="text/html">
+            <div id="NEModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">.col-md-4</div>
+                    <div class="col-md-4 col-md-offset-4">.col-md-4 .col-md-offset-4</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-3">.col-md-3 .col-md-offset-3</div>
+                    <div class="col-md-2 col-md-offset-4">.col-md-2 .col-md-offset-4</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">.col-md-6 .col-md-offset-3</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-9">
+                        Level 1: .col-sm-9
+                        <div class="row">
+                            <div class="col-xs-8 col-sm-6">
+                                Level 2: .col-xs-8 .col-sm-6
+                            </div>
+                            <div class="col-xs-4 col-sm-6">
+                                Level 2: .col-xs-4 .col-sm-6
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+            </script>
+
+<script id="ProcessOrderDialog" type="text/html">
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="gridSystemModalLabel">Finalise Order</h2>
+            </div>
+            <div class="modal-body">
+
+                <!-- ko ifnot: processingSuccessful-->
+                <div class="row">
+                    <h4 class="col-xs-5">Type</h4>
+                    <h4 class="col-xs-2">Count</h4>
+                    <h4 class="col-xs-2">Cost</h4>
+                    <h4 class="col-xs-3">Total</h4>
+                </div>
+
+                <!-- ko foreach: groupedTickets-->
+                <div class="row">
+                    <div class="col-xs-5" data-bind="text:name"></div>
+                    <div class="col-xs-2" data-bind="text:count"></div>
+                    <div class="col-xs-2" data-bind="text:NetEvents.formatCurrency(cost)"></div>
+                    <div class="col-xs-3" data-bind="text:NetEvents.formatCurrency(extcost)"></div>
+                </div>
+                <!-- /ko-->
+                <div class="row">&nbsp;</div>
+                
+                <div class="row" data-bind="if:totalDiscountsApplied() > 0">
+                    <div class="col-xs-2 col-xs-offset-7">sub total</div>
+                    <div class="col-xs-3">
+                        <span data-bind="text:NetEvents.formatCurrency(totalOrderCostBeforeDiscounts()) + ' AUD'"></span>
+                    </div>
+                </div>
+                
+                <div class="row" data-bind="if:totalDiscountsApplied() > 0">
+                    <div class="col-xs-2 col-xs-offset-7">discounts</div>
+                    <div class="col-xs-3">
+                        <span data-bind="text:NetEvents.formatCurrency(totalDiscountsApplied()) + ' AUD'"></span>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-xs-2 col-xs-offset-7">grand total</div>
+                    <div class="col-xs-3">
+                        <strong><span data-bind="text:NetEvents.formatCurrency(grandTotal()) + ' AUD'"></span></strong>
+                    </div>
+                </div>
+
+                <!-- ko if:showInvoiceMe-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- ko template:{name:'CheckField', data:{label:"Invoice Me", valueAccessor:invoiceMe, mandatory:false}} --><!-- /ko-->
+                    </div>
+                </div>
+                <!-- /ko-->
+
+                <!-- ko if:processStripe-->
+                <!-- CC DETAILS-->
+                <div class="row">&nbsp;</div>
+                <div class="row">
+
+                    <div class="col-xs-12" data-bind="css:{ 'has-error': ccError() && validationRun(), 'has-success': ccError() && validationRun() }">
+                        <div class="controls input-group input-group-sm">
+                            <label>
+                                <span data-bind="text:'Credit Card Number'"></span>
+                                <!-- ko template: {name:'MandatoryStar', data:{mandatory:true}}--><!--/ko-->
+                                <!-- ko template:{name:'ValidationErrors', data:ccErrorList}--><!-- /ko-->
+                            </label>
+                            <input class="form-control" type="number" data-bind="value: ccNumber, valueUpdate: 'afterkeydown'" />
+                        </div>
+                    </div>
+                </div>
+
+        
+
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <!-- ko template:{name:'OptionField', data:{label:'exp month', options: monthOptions, valueAccessor:ccExpMonth, mandatory:true}} --><!-- /ko-->
+                    </div>
+
+                    <div class="col-xs-4">
+                        <!-- ko template:{name:'OptionField', data:{label:'exp year', options: yearOptions, valueAccessor:ccExpYear, mandatory:true}} --><!-- /ko-->
+                    </div>
+
+                    <div class="col-xs-4" data-bind="css:{ 'has-error': cvcError() && validationRun(), 'has-success': cvcError() && validationRun() }">
+                        <div class="controls input-group input-group-sm">
+                            <label>
+                                <span data-bind="text:'CVC'"></span>
+                                <!-- ko template: {name:'MandatoryStar', data:{mandatory:true}}--><!--/ko-->
+                                <!-- ko template:{name:'ValidationErrors', data:cvcErrorList}--><!-- /ko-->
+                            </label>
+                            <input class="form-control" type="number" data-bind="value: ccCVC, valueUpdate: 'afterkeydown'" />
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko-->
+                
+                
+
+
+                <div class="row">&nbsp;</div>
+                
+                <div class="row">
+                    <div class="col-xs-6" data-bind="css:{ 'has-error': ccError() && validationRun(), 'has-success': ccError() && validationRun() }">
+                        <div class="controls input-group input-group-sm">
+                            <label>
+                                <span data-bind="text: processStripe() ? 'Cardholder Name' : 'Your Name'"></span>
+                                <!-- ko template: {name:'MandatoryStar', data:{mandatory:true}}--><!--/ko-->
+                                <!-- ko template:{name:'ValidationErrors', data:ccNameErrorList}--><!-- /ko-->
+                            </label>
+                            <input class="form-control" type="text" data-bind="value: fullCreditCardName, valueUpdate: 'afterkeydown'" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-xs-6" data-bind="css:{ 'has-error': ccError() && validationRun(), 'has-success': ccError() && validationRun() }">
+                        <div class="controls input-group input-group-sm">
+                            <label>
+                                <span data-bind="text:'Company Name'"></span>
+                                <!-- ko template: {name:'MandatoryStar', data:{mandatory:false}}--><!--/ko-->
+                            </label>
+                            <input class="form-control" type="text" data-bind="value: companyName, valueUpdate: 'afterkeydown'" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- email -->
+                <div class="row">
+
+                    <div class="col-xs-12" data-bind="css:{ 'has-error': emailError() && validationRun(), 'has-success': emailError() && validationRun() }">
+                        <div class="controls input-group input-group-sm">
+                            <label>
+                                <span data-bind="text: emailText"></span>
+                                <!-- ko template: {name:'MandatoryStar', data:{mandatory:true}}--><!--/ko-->
+                                <!-- ko template:{name:'ValidationErrors', data:emailErrorList}--><!-- /ko-->
+                            </label>
+                            <input class="form-control" type="text" data-bind="value: email, valueUpdate: 'afterkeydown'"/>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+
+                    <!-- ko if: generalErrorList().length>0-->
+                    <div class="row">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="alert alert-danger alert-block">
+                                <!-- ko template:{name:'ValidationErrors', data:generalErrorList}--><!-- /ko-->
+                                <span>Please correct errors and retry</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /ko-->
+                    <!-- ko if:showDebugMode-->
+                    <div class="row">&nbsp;</div>
+                    <h6>For Testing Only</h6>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button class="btn btn-info btn-xs" data-bind="click:loadSampleData.bind($data,1)">load visa</button>
+                            <button class="btn btn-info btn-xs" data-bind="click:loadSampleData.bind($data,2)">load mc</button>
+                            <button class="btn btn-info btn-xs" data-bind="click:loadSampleData.bind($data,3)">load amex</button>
+                            <button class="btn btn-danger btn-xs" data-bind="click:loadSampleData.bind($data,4)">load bad cvc</button>
+                            <button class="btn btn-danger btn-xs" data-bind="click:loadSampleData.bind($data,5)">load invalid</button>
+                        </div>
+                    </div>
+                    <!-- /ko-->
+                    <!-- /ko-->
+                    <!-- ko if:processingSuccessful-->
+
+                    <div class="alert alert-success alert-block">
+                        <h1 class="text-center">Your order was successful</h1>
+                    </div>
+
+                    <!-- /ko-->
+                </div>
+            <div class="modal-footer">
+                <div class="col-xs-3">
+                    <a href="http://stripe.com" target="_blank"><img src="content/stripeLogo/solid.png" /></a>
+                </div>
+                <div class="col-xs-9">
+                    <img data-bind="visible:isSaving" src="content/LargeLoader.gif"/>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" data-bind="enable:notSaving, visible:!processingSuccessful()">Cancel Payment</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" data-bind="visible:processingSuccessful, click:resetOrder ">Close</button>
+                    <button type="button" class="btn btn-success" data-bind="click:save, enable:notSaving, visible: !processingSuccessful()">Complete Order</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+            </script>
+
+
+
+
+
+ 
+
+
+    
+    <script id="About" type="text/html">
+            <div class="personalDetails">
+    <h2>This is the about template</h2>
+    <p data-bind="text:name"></p>
+</div>
+
+            </script>
+
+<script id="TestTemplate" type="text/html">
+            <div class="personalDetails">
+    <h2>This is the test template</h2>
+    <p data-bind="text:name"></p>
+    <p data-bind="text:name"></p>
+    <p data-bind="text:name"></p>
+    <p data-bind="text:name"></p>
+    <p data-bind="text:name"></p>
+    
+
+
+
+</div>
+
+            </script>
+
+
+
+
+
+    <script type="text/javascript">
+        NetEvents.InitialiseNE();
+    </script>
+
+    <meta name="description" content="Ignite Event Management System"/>
+</head>
+<body>
+    
+    <div id="savinggrowl" style="display:none;"></div>
+
+
+    <div class="container body-content">
+        
+    
+
+        
+
+
+
+
+
+
+
+    <!-- ko if: !!NE.viewModel()--><!-- this check is probably not necessary....  -->
+    <div data-bind="template: {name: 'EventRegister', data: NE.viewModel}"></div>
+    <!-- /ko -->
+
+
+
+
+
+
+
+
+
+
+
+        <hr />
+        <footer style="margin-top:200px;">
+            <p class="text-center">&copy; 2016</p>
+            <p class="text-center">
+</p>
+        </footer>
+    </div>
+
+    
+    
+
+
+    <script type="text/javascript">
+    var model = new EventRegisterPage();
+    model.loadModel(JSON.parse('{\"id\":\"006b92ab-ff40-9370-a7b9-a6328cb02ecc\",\"orderCount\":0,\"idInt\":0,\"editable\":true,\"archived\":false,\"eventName\":\"party\",\"emailForInvoiceRequests\":\"test@test.com\",\"additionalTextForReceiptEmail_Stripe\":\"We are so excited that you are coming along.\",\"additionalTextForReceiptEmail_Invoice\":\"Someone from our finance team will email you in the coming days with an invoice for the event. Your registration is not secured until payment is received.\",\"shortEventName\":\"party\",\"location\":null,\"mastheadImage\":\"//static1.squarespace.com/static/5615ad2ae4b05e4f5e8027a0/56f291ca7c65e4bd9f0711e5/57e0cd22e58c6222f9049518/1474351160506/Summercamp17.jpg\",\"soldOutMessage\":null,\"contactName\":null,\"contactNumber\":null,\"eventDate\":\"2016-09-23T00:00:00\",\"eventEndDate\":null,\"blurb\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lobortis ultricies nisl luctus fringilla. Sed dapibus nibh et est varius ullamcorper. Quisque metus odio, euismod non bibendum non, vehicula id quam. Maecenas orci risus, tempus at urna vel, lobortis convallis augue. Phasellus faucibus feugiat mauris, nec cursus sem accumsan non. Quisque facilisis pulvinar ante sed faucibus. Donec mattis leo nec purus pulvinar imperdiet. Sed vel libero et urna dictum suscipit. Maecenas egestas odio vitae nunc pellentesque laoreet. Ut nisl eros, fermentum at ultricies in, posuere non neque. Donec vulputate at risus in egestas.\\n\",\"ticketsPurchased\":[],\"hashCode\":null,\"tickets\":[{\"name\":\"Adult\",\"ticketTypeId\":\"5a24993b-af34-f08c-1c66-6a7c7fdea7e4\",\"numberAvailable\":200,\"cost\":2.0,\"startDate\":null,\"cutoffDate\":null,\"couponCode\":\"\",\"ticketDescription\":null,\"couponCodeSHA\":\"\",\"questions\":[{\"questionText\":\"First Name\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"e463538d-e304-45d3-aadf-81707deeefd4\",\"systemQuestion\":true},{\"optionsCSV\":\"ACT,NSW,Vic,Qld,Tas,SA,WA,NT\",\"questionText\":\"State\",\"questionType\":\"selectListField\",\"mandatory\":false,\"questionId\":\"1495bd62-e11f-460a-bf0c-2119c952596f\",\"systemQuestion\":true}],\"expandTicket\":true,\"discountCodes\":[]},{\"name\":\"Child\",\"ticketTypeId\":\"9d6eb941-6181-a0bc-e55c-3e4d2d828c93\",\"numberAvailable\":200,\"cost\":5.0,\"startDate\":null,\"cutoffDate\":null,\"couponCode\":\"\",\"ticketDescription\":null,\"couponCodeSHA\":\"\",\"questions\":[{\"questionText\":\"Name (not system)\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"6d1f309d-5ef5-2686-6fbd-8d4f6c307703\",\"systemQuestion\":false}],\"expandTicket\":true,\"discountCodes\":[]},{\"name\":\"Speaker\",\"ticketTypeId\":\"c272bcd6-2a85-c81c-4b36-d7c7f1c941d1\",\"numberAvailable\":200,\"cost\":800.0,\"startDate\":null,\"cutoffDate\":null,\"couponCode\":\"\",\"ticketDescription\":null,\"couponCodeSHA\":\"\",\"questions\":[{\"questionText\":\"Prefix\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"5a0a5cee-8197-4a10-8361-920fba3bf968\",\"systemQuestion\":true},{\"questionText\":\"First Name\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"e463538d-e304-45d3-aadf-81707deeefd4\",\"systemQuestion\":true},{\"questionText\":\"Surname\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"ca8bb6fa-6a2d-4280-8d4c-4044d0451e28\",\"systemQuestion\":true},{\"questionText\":\"Address\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"02b328b1-5199-4d88-9aab-4183304d8a1e\",\"systemQuestion\":true},{\"questionText\":\"City/Suburb\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"e9599fc0-b868-4aaf-bc3e-95e5d3d50a12\",\"systemQuestion\":true},{\"optionsCSV\":\"Australian Captital Territory,New South Wales,Victoria,Queensland,Tasmania,South Australia,Western Australia,Northern Territory\",\"questionText\":\"State\",\"questionType\":\"selectListField\",\"mandatory\":false,\"questionId\":\"1495bd62-e11f-460a-bf0c-2119c952596f\",\"systemQuestion\":true},{\"questionText\":\"PostCode\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"3f293daa-195b-48d8-83d0-600ea11c7cad\",\"systemQuestion\":true},{\"questionText\":\"Home Phone\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"37ecf55c-074d-4a5a-a530-cedbe1fa8e98\",\"systemQuestion\":true},{\"questionText\":\"Phone\",\"questionType\":\"textField\",\"mandatory\":false,\"questionId\":\"930d928b-e944-49ad-809e-9345ff663061\",\"systemQuestion\":true},{\"optionsCSV\":\"male,female\",\"questionText\":\"Gender\",\"questionType\":\"selectListField\",\"mandatory\":false,\"questionId\":\"46baa22e-6165-4caf-b7ce-5f473639d4ad\",\"systemQuestion\":true},{\"questionText\":\"Date of Birth\",\"questionType\":\"dateField\",\"mandatory\":false,\"questionId\":\"8b37a0d0-6d3b-478e-a7f1-59885381040a\",\"systemQuestion\":true},{\"questionText\":\"Email\",\"questionType\":\"emailField\",\"mandatory\":true,\"questionId\":\"931fbef3-1666-4a09-92b1-2e7dc94b14d2\",\"systemQuestion\":true}],\"expandTicket\":true,\"discountCodes\":[]}],\"checksum\":\"uy7F9VQMJEg=\"}'));
+        NE.viewModel = ko.observable(model);
+        NE.debugMode = true;
+        NE.viewModel().stripePublicKey("pk_test_rzG5SvaXeD1UwUe5uTmn9xaJ");
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+
+    $(document).ready(function () {
+        ko.applyBindings(NE.viewModel);
+    });
+    </script>
+
+
+
+    
+</body>
+</html>
