@@ -3820,6 +3820,35 @@ tbody.collapse.in {
   position: relative;
   display: table;
   border-collapse: separate;
+  width: 100%;
+  margin-bottom: 1em;
+}
+.input-group > div {
+  position: relative;
+}
+.input-group .btn-default {
+  width: calc(100% - 22px);
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  background-color: #fafafa;
+  text-align: left;
+}
+.input-group .btn-default:hover {
+  background-color: #fafafa !important;
+  border-color: #ccc !important;
+  color: #555 !important;
+}
+.input-group .btn-info {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  left: auto;
+  width: auto;
+  height: 30px;
 }
 .input-group[class*="col-"] {
   float: none;
