@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
-    
-    
+
+
+
     <script type="text/javascript" src="http://js.stripe.com/v2/"></script>
 
     <meta charset="utf-8"/>
@@ -17,10 +17,10 @@
 
     <link href="./Content/frontpage.css" rel="stylesheet"/>
 
-    
+
         <script src="./Scripts/modernizr.js"></script>
 
-        
+
 
         <script src="./Scripts/jquery-1.10.2.js"></script>
 <script src="./Scripts/knockout.min.js"></script>
@@ -55,7 +55,7 @@
 <script src="./Scripts/TypeScripts/Common/CustomExtenders/NumericExtender.js"></script>
 
 
-        
+
     <script src="./Scripts/Typescripts/User/EventRegisterPage.js"></script>
 <script src="./Scripts/Typescripts/User/OrderFunctions.js"></script>
 <script src="./Scripts/Typescripts/User/OrderTicketClassViewModel.js"></script>
@@ -80,7 +80,7 @@
 <script src="./Scripts/Typescripts/Definitions/SearchResultOrder.js"></script>
 <script src="./Scripts/Typescripts/Definitions/SearchTicketCheckInModel.js"></script>
 
-    
+
     <script id="EventRegister" type="text/html">
             <div class="order">
     <h1>REGISTRATION</h1>
@@ -133,16 +133,16 @@
     <!-- NOTE - there's an issue in that the fields are different widths. I haven't fixed yet, but this is a clue http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width-->
     <!-- ko foreach:answers-->
     <div class="row">
-        
-        <div class="text-left col-xs-1">
+
+        <div class="text-left col-xs-12">
             <!-- ko template:{name:'ValidationErrors', data:validationErrors}--><!-- /ko-->
         </div>
-        <div class="col-xs-11" data-bind="css:{ 'has-error': hasErrors(), 'has-success': !hasErrors() && validationRun() }">
+        <div class="col-xs-12" data-bind="css:{ 'has-error': hasErrors(), 'has-success': !hasErrors() && validationRun() }">
             <!-- ko template:{name:OrderFunctions.AnswerTypeDetails(questionType()).Template} --><!-- /ko-->
         </div>
     </div>
     <!-- /ko -->
-    
+
     <div class="discount-code" data-bind="visible:showDiscountCodeBox">
         <!-- ko template:{name:'TextField', data:{label:'Discount Code', valueAccessor:discountCode}} --><!-- /ko-->
         <!-- ko if:discountValid-->
@@ -161,7 +161,7 @@
                     <div class="big" data-bind="text:ticketModel.name"></div>
                     <div data-bind="text:ticketModel.ticketDescription"></div>
                 </div>
-                
+
                 <div class="box-stretch row-cell">Number of Tickets</div>
                 <div class="box-stretch row-cell">
                     <select class="form-control ticket-count-picker" data-bind="options: ticketCountOptions, value: ticketCount"></select>
@@ -200,7 +200,7 @@
 <script id="AnswerSelectList" type="text/html">
             <div class="answer answer-select-list">
     <!-- ko template:{name:'OptionField', data:{label:questionText(), options: options, valueAccessor:answerText, mandatory:mandatory}} --><!-- /ko-->
-    
+
 </div>
 
             </script>
@@ -264,7 +264,7 @@
     <button style="display: block" class="btn btn-xs btn-danger" data-bind="click:parent == null ? action : action.bind(parent)">
         <!-- ko text:buttonText--><!--/ko-->
     </button>
-    
+
 </div>
             </script>
 
@@ -285,7 +285,7 @@
             </script>
 
 <script id="DebugJSON" type="text/html">
-            <!-- ko if:false-->    
+            <!-- ko if:false-->
 <code>
         <!-- ko text:JSON.stringify(ko.toJS($data),null,2)--><!-- /ko -->
 </code>
@@ -331,7 +331,7 @@
         <span data-bind="text:label"></span>
         <!-- ko template: {name:'MandatoryStar'}--><!--/ko-->
     </label>
-    
+
     <label class="form-control clear" data-bind="text:valueAccessor"></label>
 </div>
             </script>
@@ -373,7 +373,7 @@
             </script>
 
 <script id="TextAreaField" type="text/html">
-            
+
 <div class="controls form-group form-group-sm">
     <div class="input-group input-group-sm">
         <label data-bind="text:label"></label>
@@ -471,21 +471,21 @@
                 </div>
                 <!-- /ko-->
                 <div class="row">&nbsp;</div>
-                
+
                 <div class="row" data-bind="if:totalDiscountsApplied() > 0">
                     <div class="col-xs-2 col-xs-offset-7">sub total</div>
                     <div class="col-xs-3">
                         <span data-bind="text:NetEvents.formatCurrency(totalOrderCostBeforeDiscounts()) + ' AUD'"></span>
                     </div>
                 </div>
-                
+
                 <div class="row" data-bind="if:totalDiscountsApplied() > 0">
                     <div class="col-xs-2 col-xs-offset-7">discounts</div>
                     <div class="col-xs-3">
                         <span data-bind="text:NetEvents.formatCurrency(totalDiscountsApplied()) + ' AUD'"></span>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-xs-2 col-xs-offset-7">grand total</div>
                     <div class="col-xs-3">
@@ -518,7 +518,7 @@
                     </div>
                 </div>
 
-        
+
 
 
                 <div class="row">
@@ -542,12 +542,12 @@
                     </div>
                 </div>
                 <!-- /ko-->
-                
-                
+
+
 
 
                 <div class="row">&nbsp;</div>
-                
+
                 <div class="row">
                     <div class="col-xs-6" data-bind="css:{ 'has-error': ccError() && validationRun(), 'has-success': ccError() && validationRun() }">
                         <div class="controls input-group input-group-sm">
@@ -588,7 +588,7 @@
                     </div>
                 </div>
 
-                
+
 
 
                     <!-- ko if: generalErrorList().length>0-->
@@ -645,10 +645,10 @@
 
 
 
- 
 
 
-    
+
+
     <script id="About" type="text/html">
             <div class="personalDetails">
     <h2>This is the about template</h2>
@@ -665,7 +665,7 @@
     <p data-bind="text:name"></p>
     <p data-bind="text:name"></p>
     <p data-bind="text:name"></p>
-    
+
 
 
 
@@ -684,15 +684,15 @@
     <meta name="description" content="Ignite Event Management System"/>
 </head>
 <body>
-    
+
     <div id="savinggrowl" style="display:none;"></div>
 
 
     <div class="container body-content">
-        
-    
 
-        
+
+
+
 
 
 
@@ -722,8 +722,8 @@
         </footer>
     </div>
 
-    
-    
+
+
 
 
     <script type="text/javascript">
@@ -743,6 +743,6 @@
 
 
 
-    
+
 </body>
 </html>
