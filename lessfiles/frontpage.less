@@ -1,0 +1,219 @@
+﻿@import "netevents";
+@import url(//fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(//fonts.googleapis.com/css?family=Raleway:400,700);
+@import "colours";
+
+
+.box-stretch {
+	position: relative;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-ms-flex: 1;
+	box-flex: 1;
+	flex: 1;
+    &.flextwo {
+        flex:2;
+    }
+    &.flexthree {
+        flex:3;
+    }
+}
+.box-horizontal {
+	 width: 100%;
+	 display: -webkit-box;
+	 display: -moz-box;
+	 display: -ms-flexbox;
+	 display: flex;
+	 -webkit-box-orient: horizontal;
+	 -moz-box-orient: horizontal;
+	 box-orient: horizontal;
+	 -ms-flex-direction: row;
+	flex-direction: row;
+}
+
+.box-vertical {
+    min-height: 100%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    /*display: -webkit-flex;*/
+    display: flex;
+   
+    -webkit-box-orient: vertical;   
+    -moz-box-orient: vertical;   
+    box-orient: vertical;
+    -ms-flex-direction: column;
+    /*-webkit-flex-direction: column;*/
+    flex-direction: column;
+}
+
+
+.boxShadow()
+{
+    box-shadow: 4px 4px 3pt 2pt #e0e0e0;
+}
+
+.colorPalette(@color)
+{
+    H3{color:@color;}
+    .order-ticket{border-color:@color !important;}
+    .ticket-header .row-cell.big.colour-block
+    {
+        background-color:@color;
+        color:white;    
+    }
+}
+/*
+    These use Modernizr. It injects css classes into the html tag... which you can test for. 
+html.no-flexboxlegacy body
+        {
+            background-color: red !important;
+        }
+
+html.flexboxlegacy body
+        {
+            background-color: pink !important;
+        }
+*/
+
+.order
+{
+    font-family:'Raleway';
+    .btn.btn-large{
+        border-radius:initial;
+        padding:10px 33px;
+    }
+
+    hr {
+        margin-bottom:80px;
+    }
+    .btn.btn-default.dark{
+        background-color: #545454;
+        color:white;
+    }
+
+    .btn.btn-default:hover{
+        background-color: lighten(#545454,20%);
+        color:white;
+    }
+
+
+    H1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight:bold;
+            /*text-transform:uppercase;*/
+        }
+    h2 {margin-bottom:20px;}
+    /*background-color:red;*/
+    .jumbotron{
+        
+        background-color: white;
+        
+        .boxShadow();
+        
+        h1{font-size:36px;}
+        .masthead{
+            border-radius: 6px;
+            width:100%;
+
+        }
+        .masthead-text{
+           
+            padding: 0px 30px;
+        }
+        padding:0px 0px 0px 0px;
+    }
+ 
+
+ .order-ticket{
+     font-family:'Raleway';
+     
+    max-width:400px;
+    float:left;
+    margin-left:10px; 
+    background: #fff;
+    border-radius: 5px;
+
+    border: 2px solid;
+    border-radius: 5px;
+        
+    padding:20px;
+    margin:10px;
+    .discount-code{
+        margin-top:20px;
+        background-color:lighten(@questionRow,10%);
+    }
+    box-shadow: 4px 4px 3pt 2pt #e0e0e0;
+    
+    .form-control {
+        background: #fafafa;
+    }
+ }
+
+
+ .ticket-count-picker{
+   height: 40px;
+   font-size: 20px;
+   line-height: 1.42857143;
+   background-color: #f1f1f1;
+   border: none;
+   border-radius: 4px;
+   min-width:60px;
+   
+ }
+
+  .order-ticket-class{
+     display:block;
+     margin-top:10px;
+     float: left; width: 100%; // http://stackoverflow.com/a/2062264/494635
+
+     .ticket-header{
+          box-shadow: 4px 6px 26pt 2pt #e0e0e0;
+         margin:20px 0px 20px 0px;
+         max-width:600px;
+         display:block;
+       .row-cell{
+         padding:20px;
+          .big, &.big{
+              font-size:30px;
+              font-weight:bold;
+          }
+        }
+      }
+
+      &.palette1 {.colorPalette(@c1);}
+      &.palette2 {.colorPalette(@c2);}
+      &.palette3 {.colorPalette(@c3);}
+      &.palette4 {.colorPalette(@c4);}
+      &.palette5 {.colorPalette(@c5);}
+      &.palette6 {.colorPalette(@c6);}
+      &.palette7 {.colorPalette(@c7);}
+      &.palette8 {.colorPalette(@c8);}
+      &.palette9 {.colorPalette(@c9);}
+      &.palette10 {.colorPalette(@c10);}
+ }
+}
+
+/* this class is from modernizer*/
+.no-flexboxlegacy .order 
+    {
+        .jumbotron{
+            height:1100px;
+            .masthead-text{
+                padding-top:50px;
+            }
+        }
+
+        .order-ticket-class {
+            .ticket-header {
+                max-width:900px !important;
+            }
+        }
+    
+}   
+
+
+html[data-useragent*='MSIE 11.0']
+{
+    background-color:blue !important;
+}

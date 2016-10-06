@@ -1,0 +1,210 @@
+﻿@import "colours";
+.editEvents
+{
+    /*border:1px solid silver;*/
+    padding:5px;
+}
+
+@panelBack:#edfaff;
+@questionRow:#d6d6d6;
+@errorColour:#a94442;
+@questionBackground:#97d2c9;
+
+@bsSuccessGreenBack: #5cb85c;
+@bsSuccessGreenBorder: #4cae4c;
+
+.editEvents .form-inline, .admin-ticket .form-inline
+    {
+    margin-top:5px;
+    }
+
+.admin-ticket {
+    border:1px solid black;
+    margin:5px 2px;
+    padding:10px 10px 10px 10px;
+
+    .tray {
+        margin:5px 2px;
+        padding:10px 10px 10px 10px;
+        border:1px solid black;
+        background-color: @panelBack;
+        color: black;
+
+        
+    }
+
+    h2{
+        font-size:12pt;
+        font-weight:bold;
+    }
+}
+
+    .question-library{
+    background-color: lighten(@panelBack, 30%);
+    padding:10px;
+    margin:10px 0px;
+
+    }
+
+.question-row{
+    background-color: @questionRow;
+    border:1px solid silver;
+    padding:5px;
+    margin:5px 0px;
+
+}
+
+.event-save-errors{
+    color:red;
+}
+
+#errorgrowl {
+        position: fixed;
+        left: 0;
+        width: 300px;
+        background-color: green;
+        color: white;
+        text-align: center;
+        padding: 0.5em;
+        z-index: 99999;
+        cursor: pointer;
+        top: 0;
+    }
+
+        #errorgrowl.error {
+            background-color: #ff0000;
+        }
+
+    #savinggrowl {
+        position: fixed;
+        left: 0;
+        width: 35px;
+        height: 35px;
+        background: #2E8B57 url('./LargeLoader.gif') no-repeat left center;
+        color: white;
+        text-align: center;
+        padding: 0.5em;
+        z-index: 99999;
+        top: 0;
+    }
+
+
+    .saving {
+        color: orange;
+        background: url('/content/loader.gif') no-repeat right center;
+        height: 20px;
+        width: 80px;
+        border: 1px solid orange;
+        padding: 7px;
+    }
+
+    .unsavedChanges {
+        color: red;
+        height: 20px;
+        width: 150px;
+        border: 1px solid red;
+        padding: 7px;
+    }
+    
+    .saved {
+        color: green;
+        border: 1px solid green;
+        padding: 7px;
+        height: 20px;
+        width: 80px;
+    }
+
+    .controls{
+        &.check-field label
+            {
+                cursor:pointer !important;
+                }
+        }        
+    
+ .label-as-badge {
+    border-radius: 1em;
+}
+
+ .tooltip-inner {
+    max-width: 500px !important;
+    white-space:pre-wrap !important;
+    text-align:left !important;
+}
+
+
+ .mandatory-star
+ {
+     color:@errorColour;
+     font-weight:bold;
+ }
+ .modal-header{
+     background-color:@bsSuccessGreenBack;
+     border:1px solid @bsSuccessGreenBorder;
+ }
+
+.discount-codes{
+    background-color: lighten(@panelBack, 30%);
+    padding:10px;
+    margin:10px 0px;
+
+    .discount-row{
+        background-color: @questionRow;
+        border:1px solid silver;
+        padding:5px;
+        margin:5px 0px;
+    
+    }
+
+    .controls{
+        width:130px;
+    }
+}
+
+.boxShadow()
+{
+    box-shadow: 4px 4px 3pt 2pt #e0e0e0;
+}
+
+
+
+.check-in{
+    .card{
+        .boxShadow();
+        text-overflow:ellipsis;
+        border:1px solid @red;
+        margin:10px 10px;
+        padding:10px 10px;
+        float:left;
+        width:350px;
+        background-color:Lighten(@red,10%);
+
+        &.checked-in{
+            background-color:Lighten(@green,10%);
+            color:#222;
+        }
+        &:hover{cursor:pointer;}
+    }
+}
+
+.event-management {
+    .card {
+        h1 {font-size:18px;}
+        .boxShadow();
+        border:1px solid red;
+        margin-top:20px;
+        padding:20px 20px;
+        overflow:hidden; // http://stackoverflow.com/a/2062264/494635
+
+        .tickets{
+         overflow:hidden; // http://stackoverflow.com/a/2062264/494635
+        }
+        .ticket{
+            .boxShadow();
+            margin:10px 10px;
+            padding:10px 10px;
+            float:left;
+            width:350px;
+        }
+    }
+} 
+
